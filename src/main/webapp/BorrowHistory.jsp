@@ -80,7 +80,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" style="color:white" href="#" role="button" data-bs-toggle="dropdown">Collection</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="book listing.html">Our Collection</a></li>
+                                    <li><a class="dropdown-item" href="book listing.html">Our Collection la</a></li>
                                 </ul>
                             </li>
                         </ul>
