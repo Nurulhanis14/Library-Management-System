@@ -13,9 +13,13 @@ public class StaffLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // Database connection info
-    private String jdbcURL = "jdbc:mysql://localhost:3306/library";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "admin";
+    private String jdbcURL = "jdbc:mysql://"
+            + System.getenv("DB_HOST") + ":"
+            + System.getenv("DB_PORT") + "/"
+            + System.getenv("DB_NAME");
+
+    private String jdbcUsername = System.getenv("DB_USER");
+    private String jdbcPassword = System.getenv("DB_PASSWORD");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

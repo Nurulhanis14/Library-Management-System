@@ -13,12 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 
 //@WebServlet("/UpdateProfileServlet")
 public class UpdateProfileServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     // Database connection info
-    private String jdbcURL = "jdbc:mysql://localhost:3306/library";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "admin";
+    private String jdbcURL = "jdbc:mysql://"
+            + System.getenv("DB_HOST") + ":"
+            + System.getenv("DB_PORT") + "/"
+            + System.getenv("DB_NAME");
+
+    private String jdbcUsername = System.getenv("DB_USER");
+    private String jdbcPassword = System.getenv("DB_PASSWORD");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userid = request.getParameter("userid");
@@ -57,8 +62,12 @@ public class UpdateProfileServlet extends HttpServlet {
             response.getWriter().println("Error: " + e.getMessage());
         } finally {
             try {
-                if (pst != null) pst.close();
-                if (con != null) con.close();
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

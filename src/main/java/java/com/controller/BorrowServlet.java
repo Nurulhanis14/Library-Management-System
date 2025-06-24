@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/BorrowServlet")
 public class BorrowServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     // Fungsi untuk handle POST request
@@ -27,8 +28,14 @@ public class BorrowServlet extends HttpServlet {
             int userid = Integer.parseInt(request.getParameter("userid"));
 
             // Sambungan ke database
-            Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/library", "root", "admin");
+            String dbHost = System.getenv("DB_HOST");         // e.g., "localhost"
+            String dbPort = System.getenv("DB_PORT");         // e.g., "3306"
+            String dbName = System.getenv("DB_NAME");         // e.g., "library"
+            String dbUser = System.getenv("DB_USER");         // e.g., "root"
+            String dbPassword = System.getenv("DB_PASSWORD"); // e.g., "admin"
+
+            String url = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+            Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
 
             // Pastikan sambungan berjaya
             if (conn == null) {

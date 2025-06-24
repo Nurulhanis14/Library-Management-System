@@ -23,7 +23,17 @@ public class EditBookServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "admin");
+
+            // Get database info from environment variables
+            String dbHost = System.getenv("DB_HOST");         // e.g., "localhost"
+            String dbPort = System.getenv("DB_PORT");         // e.g., "3306"
+            String dbName = System.getenv("DB_NAME");         // e.g., "library"
+            String dbUser = System.getenv("DB_USER");         // e.g., "root"
+            String dbPassword = System.getenv("DB_PASSWORD"); // e.g., "admin"
+
+            String jdbcURL = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+
+            Connection conn = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
 
             String sql = "UPDATE book SET bookTitle=?, bookAuthor=?, datePublished=?, synopsis=? WHERE bookID=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -45,5 +55,3 @@ public class EditBookServlet extends HttpServlet {
         }
     }
 }
-
-

@@ -111,13 +111,24 @@
 
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "admin");
+
+                            // Get DB config from environment variables
+                            String dbHost = System.getenv("DB_HOST");
+                            String dbPort = System.getenv("DB_PORT");
+                            String dbName = System.getenv("DB_NAME");
+                            String dbUser = System.getenv("DB_USER");
+                            String dbPassword = System.getenv("DB_PASSWORD");
+
+                            String jdbcURL = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+
+                            conn = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
                             stmt = conn.createStatement();
                             rs = stmt.executeQuery("SELECT * FROM book");
 
                             while (rs.next()) {
                                 int bookid = rs.getInt("bookid");
                     %>
+
                     <tr>
                         <td><%= bookid%></td>
                         <td><%= rs.getString("bookTitle")%></td>
